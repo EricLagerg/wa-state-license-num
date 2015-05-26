@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Washington State Driver's License Number</title>
+	<link href="normalize.css" rel="stylesheet">
+	<style type="text/css">
+		body {
+			margin: 40px auto;
+			max-width: 400px;
+			line-height: 1.6;
+			font-size: 18px;
+			color: #444;
+			padding: 0 10px;
+		}
+
+		h1, h2, h3 {
+			line-height:1.2;
+		}
+		input[type="text"] {
+			padding: 0.5em;
+			margin: 0.25em;
+			width: 400px;
+		}
+		.submit-align {
+			text-align: center;
+		}
+		input[type="submit"],
+		#submit-form {
+			padding: 18px 28px;
+			margin-top: 1em;
+			width: inherit;
+			border: 1px solid #444;
+			background: transparent;
+			font-size: 0.8em;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			line-height: 1em;
+			-webkit-transition: all 0.3s ease-in-out;
+			-moz-transition: all 0.3s ease-in-out;
+			transition: all 0.3s ease-in-out;
+		}
+		input[type="submit"]:hover,
+		#submit-form:hover {
+			border-color: #73CEED;
+  			background: #73CEED;
+  			color: #fff;
+		}
+		.results {
+			margin-top: 0.5em;
+			text-align: center;
+		}
+	</style>	
+</head>
+<body>
+
+	<form id="form" accept-charset="utf-8">
+		<label for="fname">First:</label>
+		<input type="text" name="fname" id="fname" placeholder="First Name" required>
+
+		<label for="mname">Middle:</label>
+		<input type="text" name="mname" id="mname" placeholder="Middle Name" required>
+
+		<label for="lname">Last:</label>
+		<input type="text" name="lname" id="lname" placeholder="Last Name" required>
+
+		<label for="dob">Date of Birth:</label>
+		<input type="text" name="dob" id="dob" placeholder="YYYY-MM-DD" required>
+
+		<div class="submit-align">
+			<input type="submit" id="submit-form">
+		</div>
+	</form>
+
+	<section class="results">
+		<div id="license-num1">TBD</div>
+		<div>
+			<small>or, less likely:</small>
+		</div>
+		<div id="license-num2">TBD</div>
+	</section>
+	
+	<script src="license-number.js" type="text/javascript" charset="utf-8" async defer></script>
+</body>
+</html>
