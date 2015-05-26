@@ -2,6 +2,10 @@ window.onload = function() {
 	var doc = document,
 		submit = doc.getElementById("form");
 
+	/**
+	 * @constructor
+	 * @unrestricted
+	 */
 	function Form(fname, mname, lname, dob) {
 		this.fname = fname.toUpperCase();
 		this.mname = mname.toUpperCase();
@@ -15,7 +19,9 @@ window.onload = function() {
 		parse_form();		
 	}, true);
 
-	// Parse the form, and set off the chain of events.
+	/**
+	 * Parse form and start chain of functions.
+	 */
 	function parse_form() {
 		form = new Form(
 			doc.getElementById("fname").value || null,
@@ -38,10 +44,10 @@ window.onload = function() {
 	 * If it doesn't exist, show the user which inputs
 	 * they missed.
 	 *
-	 * @param  {Object}   A Form object representing the form the user
-	 * 				      completed.
-	 * @return {String[]} A two-value array, containing both potential
-	 * 					  license numbers.
+	 * @param  {Object} form           A Form object representing the form
+	 *                                 the user completed.
+	 * @return {Array<string>|boolean} A two-value array, containing both 
+	 * 					               potential license numbers.
 	 */
 	function gen_license_num(form) {
 		form = form || {}
@@ -128,7 +134,7 @@ window.onload = function() {
 			8:  ["O", "6"],
 			9:  ["P", "7"],
 			10: ["Q", "8"],
-			11: ["R", '9'],
+			11: ["R", '9']
 		};
 
 		temp1 += monthTable[month][0];
@@ -190,9 +196,9 @@ window.onload = function() {
 	 * using the formula
 	 * checksum = (L1 – L2 + L3 – L4 + L5 – F + M – Y1 + Y2 – M + D) mod 10;
 	 *
-	 * @param  {String} A license #, sans checksum
-	 * @return {Number} A license #'s checksum. A return of -1 specifies an
-	 * 					invalid character.
+	 * @param  {string} str A license #, sans checksum
+	 * @return {number}     A license #'s checksum. A return of -1 
+	 * 					    specifies an invalid character.
 	 */
 	function calc_checksum(str) {
 		var ret = 0;
@@ -290,8 +296,9 @@ window.onload = function() {
 	 * Stolen from http://stackoverflow.com/a/2587398/2967113
 	 * because dates suck.
 	 *
-	 * @param  {String} A string representing a date in YYYY-MM-DD format.
-	 * @return {Object} A Date Object
+	 * @param  {String} date A string representing a date in YYYY-MM-DD 
+	 *                       format.
+	 * @return {Object}      A Date Object
 	 */
 	function parse_date(date) {
 		var parts = date.split('-');
