@@ -52,10 +52,8 @@ window.onload = function() {
 	function gen_license_num(form) {
 		form = form || {}
 
-		if (!form.hasOwnProperty("set")) {
-
+		if (!form.hasOwnProperty("set"))
 			return false;
-		}
 
 		// Potential license strings.
 		var license1 = "",
@@ -75,7 +73,7 @@ window.onload = function() {
 			e.g. "Woo" or "Lee". */
 		for ( ; end < 5; end++) {
 			license1 += "*";
-			license1 += "*";
+			license2 += "*";
 		}
 
 		var FI = form.fname.charAt(0);
