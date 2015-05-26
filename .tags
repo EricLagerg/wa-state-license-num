@@ -1,0 +1,14 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+0	/home/eric/github-repos/wash-dl/license-number.js	/^			0:  ["B", "S"],$/;"	p	class:gen_license_num.monthTable
+Form	/home/eric/github-repos/wash-dl/license-number.js	/^	function Form(fname, mname, lname, dob) {$/;"	c	class:window.onload
+calc_checksum	/home/eric/github-repos/wash-dl/license-number.js	/^	function calc_checksum(str) {$/;"	f	function:window.onload
+gen_license_num	/home/eric/github-repos/wash-dl/license-number.js	/^	function gen_license_num(form) {$/;"	f	function:window.onload
+parse_date	/home/eric/github-repos/wash-dl/license-number.js	/^	function parse_date(date) {$/;"	f	function:window.onload
+parse_form	/home/eric/github-repos/wash-dl/license-number.js	/^	function parse_form() {$/;"	f	function:window.onload
+window.onload	/home/eric/github-repos/wash-dl/license-number.js	/^window.onload = function() {$/;"	f
+window.onunload	/home/eric/github-repos/wash-dl/license-number.js	/^window.onunload = function() { \/* disable caching *\/ }/;"	f
