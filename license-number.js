@@ -1,16 +1,21 @@
 window.onload = function() {
+	'use strict';
+
 	var doc = document,
-		submit = doc.getElementById("form");
+		submit = doc.getElementById("form"),
+		or = doc.getElementById("or"),
+		ln1 = doc.getElementById("license-num1"),
+		ln2 = doc.getElementById("license-num2");
 
 	/**
 	 * @constructor
 	 * @unrestricted
 	 */
 	function Form(fname, mname, lname, dob) {
-		this.fname = fname.toUpperCase();
-		this.mname = mname.toUpperCase();
-		this.lname = lname.toUpperCase();
-		this.dob   = dob;
+		this.fname = (fname || "").toUpperCase();
+		this.mname = (mname || "").toUpperCase();
+		this.lname = (lname || "").toUpperCase();
+		this.dob   = (dob   || "");
 		this.set   = true;
 	}
 
@@ -23,20 +28,34 @@ window.onload = function() {
 	 * Parse form and start chain of functions.
 	 */
 	function parse_form() {
-		form = new Form(
-			doc.getElementById("fname").value || null,
-			doc.getElementById("mname").value || null,
-			doc.getElementById("lname").value || null,
-			doc.getElementById("dob").value   || null
+		or.innerHTML = "or, less likely:"
+
+		var form = new Form(
+				doc.getElementById("fname").value || null,
+				doc.getElementById("mname").value || null,
+				doc.getElementById("lname").value || null,
+				doc.getElementById("dob").value   || null
 		)
 
 		var licenses = gen_license_num(form);
+		
+		ln1.innerHTML = licenses[0];
+		ln2.innerHTML = licenses[1];
+	}
 
-		doc.getElementById("license-num1")
-			.innerHTML = licenses[0];
+	/**
+	 * Show any errors that may have occured, then throw an exception
+	 * to stop script execution.
+	 *
+	 * @throws Invalid Input Erro
+	 */
+	function show_error() {
+		// Clear "or" div.
+		or.innerHTML = "";
 
-		doc.getElementById("license-num2")
-			.innerHTML = licenses[1];
+		ln1.innerHTML = "Please correctly fill out each field."
+		ln2.innerHTML = "Note: Middle name is not reqired.";
+		throw "Invalid Input";
 	}
 
 	/**
@@ -53,7 +72,7 @@ window.onload = function() {
 		form = form || {}
 
 		if (!form.hasOwnProperty("set"))
-			return false;
+			show_error();
 
 		// Potential license strings.
 		var license1 = "",
@@ -76,33 +95,32 @@ window.onload = function() {
 			license2 += "*";
 		}
 
-		var FI = form.fname.charAt(0);
+		// First letter of first name
+		var fi = form.fname.charAt(0);
 
-		license1 += FI;
-		license2 += FI;
+		license1 += fi;
+		license2 += fi;
 
-		// Grab middle initial (MI)
-		var MI = form.mname.charAt(0) || "*";
+		// Grab middle initial (mi)
+		var mi = form.mname.charAt(0) || "*";
 
-		license1 += MI;
-		license2 += MI;
+		license1 += mi;
+		license2 += mi;
 
-		var dob = parse_date(form.dob);
+		var dob = form.dob.valueAsDate || parse_date(form.dob),
 			day = dob.getDate(),
 			month = dob.getMonth(),
 			year = dob.getFullYear();
 
-		// Get the two-digit year (TDY), and subtract from 100.
-		var p1 = year.toString().slice(2),
-			p2 = 100 - +p1;
-			TDY = p2.toString();
+		// Get the two-digit year (tdy), and subtract from 100.
+		var tdy = (100 - +year.toString().slice(2)).toString();
 
 		// Add zero-padding;
-		if (TDY.length == 1)
-			TDY = "0" + TDY;
+		if (tdy.length == 1)
+			tdy = "0" + tdy;
 
-		license1 += TDY;
-		license2 += TDY;
+		license1 += tdy;
+		license2 += tdy;
 
 		/* Temporary strings to hold the rest of our license #,
 			since we have to insert the checksum before the rest,
@@ -120,20 +138,20 @@ window.onload = function() {
 		// Jun		L	3		Dec		R	9
 
 		// dateObj.getMonth() is zero-indexed.
-		var monthTable = {
-			0:  ["B", "S"],
-			1:  ["C", "T"],
-			2:  ["D", "U"],
-			3:  ["J", "1"],
-			4:  ["K", "2"],
-			5:  ["L", "3"],
-			6:  ["M", "4"],
-			7:  ["N", "5"],
-			8:  ["O", "6"],
-			9:  ["P", "7"],
-			10: ["Q", "8"],
-			11: ["R", '9']
-		};
+		var monthTable = [
+			["B", "S"], // Jan
+			["C", "T"], // Feb
+			["D", "U"], // March
+			["J", "1"], // April
+			["K", "2"], // May
+			["L", "3"], // June
+			["M", "4"], // July
+			["N", "5"], // Aug
+			["O", "6"], // Sept
+			["P", "7"], // Oct
+			["Q", "8"], // Nov
+			["R", '9']  // Dev
+		];
 
 		temp1 += monthTable[month][0];
 		temp2 += monthTable[month][1];
@@ -165,7 +183,8 @@ window.onload = function() {
 			"U"            // 31
 		];
 
-		// day-1 because dayTable is zero-indexed.
+		/* day-1 because dayTable is zero-indexed and
+			dateObj.getDate() isn't. */
 		temp1 += dayTable[day-1];
 		temp2 += dayTable[day-1];
 
@@ -300,6 +319,10 @@ window.onload = function() {
 	 */
 	function parse_date(date) {
 		var parts = date.split('-');
+
+		if (parts.length < 3)
+			show_error();
+
 		return new Date(parts[0], parts[1]-1, parts[2])
 	}
 }
